@@ -59,3 +59,6 @@ gem 'pg'
 # JSON API
 gem 'grape'
 gem 'grape-entity'
+
+# api documentation
+gem 'swagger-blocks'

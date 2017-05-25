@@ -2,6 +2,96 @@ module API
   module V1
     class TacosController < Grape::API
       include API::V1::Defaults
+      include Swagger::Blocks
+
+      # Documentation
+      swagger_path '/api/v1/tacos' do
+        operation :get do
+          key :description, 'Returns all tacos from the system'
+          key :operationId, 'allTacos'
+          key :produces, [
+            'application/json',
+          ]
+          key :tags, [
+            'taco'
+          ]
+          response 200 do
+            key :description, 'taco response'
+          end
+          response :default do
+            key :description, 'unexpected error'
+          end
+        end
+
+        operation :post do
+          key :description, 'Create new taco'
+          key :operationId, 'newTacos'
+          key :produces, [
+            'application/json',
+          ]
+          key :tags, [
+            'taco'
+          ]
+          parameter do
+            key :name, :meat
+            key :in, :query
+            key :description, 'provide chicken or steak'
+            key :required, true
+            key :type, :string
+          end
+          parameter do
+            key :name, :rice
+            key :in, :query
+            key :description, 'Check here for rice'
+            key :required, true
+            key :type, :boolean
+          end
+          parameter do
+            key :name, :salsa
+            key :in, :query
+            key :description, 'Check here for salsa'
+            key :required, true
+            key :type, :boolean
+          end
+          parameter do
+            key :name, :note
+            key :in, :query
+            key :description, 'Add note here'
+            key :required, true
+            key :type, :text
+          end
+          response 200 do
+            key :description, 'taco response'
+          end
+          response :default do
+            key :description, 'unexpected error'
+          end
+        end
+      end
+
+      swagger_path '/api/v1/tacos/{id}' do
+        operation :delete do
+          key :description, 'Delete record for provided id'
+          key :operationId, 'deleteTaco'
+          key :tags, [
+            'delete taco'
+          ]
+          parameter do
+            key :name, :id
+            key :in, :path
+            key :description, 'ID of record to delete'
+            key :required, true
+            key :type, :integer
+          end
+          response 200 do
+            key :description, 'pet response'
+          end
+          response :default do
+            key :description, 'unexpected error'
+          end
+        end
+      end
+
 
       resource :tacos do
 
@@ -33,8 +123,8 @@ module API
           requires :id, type: String, desc: 'Taco ID.'
         end
         delete ':id' do
-          @taco = Taco.find(params[:id]).destroy
-          #present @taco
+          Taco.find(params[:id]).destroy
+          present 'Taco deleted succesfully'
         end
       end
     end
