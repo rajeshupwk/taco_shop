@@ -35,29 +35,29 @@ module API
           parameter do
             key :name, :meat
             key :in, :query
-            key :description, 'provide chicken or steak'
+            key :description, 'provide 0 for chicken or 1 for steak'
             key :required, true
-            key :type, :string
+            key :type, :integer
           end
           parameter do
             key :name, :rice
             key :in, :query
             key :description, 'Check here for rice'
-            key :required, true
+            key :required, false
             key :type, :boolean
           end
           parameter do
             key :name, :salsa
             key :in, :query
             key :description, 'Check here for salsa'
-            key :required, true
+            key :required, false
             key :type, :boolean
           end
           parameter do
             key :name, :note
             key :in, :query
             key :description, 'Add note here'
-            key :required, true
+            key :required, false
             key :type, :text
           end
           response 200 do
@@ -103,10 +103,7 @@ module API
 
         desc 'Create new taco'
         params do
-          requires :meat, type: String
-          requires :rice, type: String
-          requires :salsa, type: String
-          requires :note, type: String
+          requires :meat, type: Integer
         end
         post do
           @taco = Taco.create({
