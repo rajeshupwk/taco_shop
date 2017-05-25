@@ -55,3 +55,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Use postgreSql as the database for Active Record
 gem 'pg'
+
+# JSON API
+gem 'grape'
+gem 'grape-entity'
