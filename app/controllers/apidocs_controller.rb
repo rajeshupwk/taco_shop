@@ -1,7 +1,7 @@
 class ApidocsController < ActionController::Base
   include Swagger::Blocks
 
-  HOST = 'localhost:3000'
+  HOST = 'taco-shop.herokuapp.com'
 
   swagger_root do
     key :swagger, '2.0'
