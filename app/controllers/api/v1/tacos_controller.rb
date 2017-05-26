@@ -90,6 +90,26 @@ module API
             key :description, 'unexpected error'
           end
         end
+        operation :get do
+          key :description, 'Return saved record by id'
+          key :operationId, 'getTaco'
+          key :tags, [
+            'get taco'
+          ]
+          parameter do
+            key :name, :id
+            key :in, :path
+            key :description, 'ID of record to delete'
+            key :required, true
+            key :type, :integer
+          end
+          response 200 do
+            key :description, 'pet response'
+          end
+          response :default do
+            key :description, 'unexpected error'
+          end
+        end
       end
 
 
@@ -121,7 +141,16 @@ module API
         end
         delete ':id' do
           Taco.find(params[:id]).destroy
-          present 'Taco deleted succesfully'
+          present nil
+        end
+
+        desc 'Return a taco'
+        params do
+          requires :id, type: String, desc: 'Taco ID.'
+        end
+        get ':id' do
+          @taco = Taco.find(params[:id])
+          present @taco, with: API::V1::Entities::TacoEntity
         end
       end
     end
